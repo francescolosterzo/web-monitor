@@ -2,6 +2,11 @@ from utils.utils import get_page_hash, read_last_hash, write_current_hash
 from utils.utils import send_email
 import argparse
 
+## TODO:
+## - add .gitignore
+## - the hash file should be a json which contains a dictionary of url --> hash
+## - in order for it to work properly in github actions the hash file should be committed and pushed every time is updated (or just every time?)
+
 # URL to monitor
 URL = "https://www.ilpost.it/live/da-costa-a-costa/"
 
