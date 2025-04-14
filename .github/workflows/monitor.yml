@@ -31,7 +31,7 @@ jobs:
         SMTP_LOGIN: ${{ secrets.SMTP_LOGIN }}
         SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
         TO_EMAIL: ${{ secrets.TO_EMAIL }}
-      run: python monitor.py --send_notification --url https://www.corriere.it
+      run: poetry run python monitor.py --send_notification --url https://www.corriere.it
 
     - name: Commit and Push Hash File
       run: |

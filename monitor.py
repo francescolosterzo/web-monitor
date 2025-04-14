@@ -1,6 +1,5 @@
 from utils.utils import get_page_hash, load_hashes, write_hashes
 from utils.utils import send_email
-import json
 import argparse
 
 
