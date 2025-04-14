@@ -29,6 +29,12 @@ def main():
         hashes[url] = current_hash
         write_hashes(HASH_FILE, hashes)
 
+        if send_notification:
+            send_email(
+                subject="New webpage being tracked!",
+                body=f"The webpage at {url} has been added to the tracking."
+            )
+
     elif current_hash != last_hash:
 
         print("🔔 The webpage has changed since the last check!")
