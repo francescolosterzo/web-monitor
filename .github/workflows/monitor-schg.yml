@@ -1,8 +1,8 @@
-name: Web Monitor
+name: Monitor SCHG
 
 on:
   schedule:
-    - cron: "0 14 */14 * *" # Runs every 14 days at 2:00 PM UTC
+    - cron: "0 14 */14 3 *" # Runs every 14 days at 2:00 PM UTC
   workflow_dispatch: # Allows manual triggering of the workflow
 
 permissions:
@@ -36,7 +36,7 @@ jobs:
         SMTP_LOGIN: ${{ secrets.SMTP_LOGIN }}
         SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
         TO_EMAIL: ${{ secrets.TO_EMAIL }}
-      run: poetry run python monitor.py --send_notification --url https://www.corriere.it
+      run: poetry run python monitor.py --send_notification --url https://schg.ch/fr/news/mise-en-location-schg
 
     - name: Commit and Push Hash File
       run: |
