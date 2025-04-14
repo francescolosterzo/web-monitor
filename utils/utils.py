@@ -1,9 +1,11 @@
 import hashlib
 import requests
 import os
+import json
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+
 
 def get_page_hash(url):
 
@@ -13,17 +15,25 @@ def get_page_hash(url):
 
     return hashlib.sha256(page_content).hexdigest()
 
-def read_last_hash(file_path):
 
-    if not os.path.exists(file_path):
-        return None
-    with open(file_path, "r") as file:
-        return file.read().strip()
+def load_hashes(file_path):
+    """
+    Load the hashes from a JSON file.
+    """
+    try:
+        with open(file_path, "r") as file:
+            return json.load(file)
+    except FileNotFoundError:
+        return {}
+    
 
-def write_current_hash(file_path, hash_value):
-
+def write_hashes(file_path, hashes):
+    """
+    Update the hashes in the JSON file.
+    """
     with open(file_path, "w") as file:
-        file.write(hash_value)
+        json.dump(hashes, file)
+
 
 def send_email(subject, body):
 
