@@ -5,7 +5,6 @@ import argparse
 
 
 ## TODO:
-## - the hash file should be a json which contains a dictionary of url --> hash
 ## - in order for it to work properly in github actions the hash file should be committed and pushed every time is updated (or just every time?)
 
 # File to store the last hash
