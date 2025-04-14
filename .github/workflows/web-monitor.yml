@@ -1,0 +1,42 @@
+name: Web Monitor
+
+on:
+  schedule:
+    - cron: "0 14 */14 * *" # Runs every 14 days at 2:00 PM UTC
+  workflow_dispatch: # Allows manual triggering of the workflow
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.10.14"
+
+    - name: Install Poetry
+      run: |
+        curl -sSL https://install.python-poetry.org | python3 -
+        export PATH="$HOME/.local/bin:$PATH"
+
+    - name: Install dependencies
+      run: poetry install
+
+    - name: Run Web Monitor
+      env:
+        SMTP_LOGIN: ${{ secrets.SMTP_LOGIN }}
+        SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+        TO_EMAIL: ${{ secrets.TO_EMAIL }}
+      run: python monitor.py --send_notification --url https://www.corriere.it
+
+    - name: Commit and Push Hash File
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+        git add hashes/hashes.json
+        git commit -m "update hashes"
+        git push
